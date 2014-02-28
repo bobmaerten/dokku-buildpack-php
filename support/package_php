@@ -83,6 +83,8 @@ build_command=$(cat <<BUILD_CMD
     --with-xmlrpc \
     --with-curl=/usr \
     --with-xsl \
+    --with-tidy \
+    --with-gettext \
     --enable-fpm \
     --enable-mbstring \
     --enable-pcntl \
