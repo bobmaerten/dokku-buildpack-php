@@ -418,7 +418,14 @@ mkdir -p "bin"
 
 cat > "bin/run" <<SH
 #!/usr/bin/env bash
+WEB_ROOT=/app/web
 
+echo "Creating CMSMS cache directories"
+for f in cache configs template_c; do
+    mkdir -p $WEB_ROOT/tmp/$f
+    touch $WEB_ROOT/tmp/$f/index.html
+done
+chmod 777 -R $WEB_ROOT/tmp
 pmsgr=/tmp/pmsgr
 rm -f \$pmsgr
 mkfifo \$pmsgr
@@ -430,6 +437,8 @@ done
 export DOCUMENT_ROOT="$DOCUMENT_ROOT"
 export INDEX_DOCUMENT="$INDEX_DOCUMENT"
 export NGINX_INCLUDES="$NGINX_INCLUDES"
+
+
 
 if [ -n "\$NEW_RELIC_LICENSE_KEY" ]; then
     echo "newrelic.license=\"\$NEW_RELIC_LICENSE_KEY\"" > /app/vendor/php/etc/conf.d/newrelic_license.ini
