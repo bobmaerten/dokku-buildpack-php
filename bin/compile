@@ -239,6 +239,9 @@ function package_newrelic_enabled() {
 
 export_env_dir "$3"
 
+# Create dokku user so volumes can be read/write
+useradd -b /app/web -s /dev/null -u 1000 -U dokku
+
 # Download jq binary for JSON processing
 export PATH="$HOME/bin:$PATH"
 mkdir -p $HOME/bin
