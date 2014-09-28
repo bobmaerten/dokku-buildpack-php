@@ -379,7 +379,7 @@ if [ ! -f "$FRAMEWORK" ] && [ -f "$basedir/../frameworks/$FRAMEWORK" ]; then
 fi
 
 if [ ! -f "$FRAMEWORK" ]; then
-    echo "Framework \"$FRAMEWORK\" not found!"
+    log_error "Framework \"$FRAMEWORK\" not found!"
     exit 1
 fi
 
