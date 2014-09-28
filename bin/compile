@@ -418,14 +418,7 @@ mkdir -p "bin"
 
 cat > "bin/run" <<SH
 #!/usr/bin/env bash
-WEB_ROOT=/app/web
 
-echo "Creating CMSMS cache directories"
-for f in cache configs template_c; do
-    mkdir -p $WEB_ROOT/tmp/$f
-    touch $WEB_ROOT/tmp/$f/index.html
-done
-chmod 777 -R $WEB_ROOT/tmp
 pmsgr=/tmp/pmsgr
 rm -f \$pmsgr
 mkfifo \$pmsgr
