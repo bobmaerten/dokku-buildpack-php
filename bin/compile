@@ -239,8 +239,12 @@ function package_newrelic_enabled() {
 
 export_env_dir "$3"
 
+# Create dokku user so volumes can be read/write
+useradd -b /app/web -s /dev/null -u 1000 -U dokku
+
 # Download jq binary for JSON processing
 export PATH="$HOME/bin:$PATH"
+mkdir -p $HOME/bin
 curl "http://${S3_BUCKET}.s3.amazonaws.com/jq/jq" -L -s -o - > "$HOME/bin/jq"
 chmod +x "$HOME/bin/jq"
 
@@ -429,6 +433,8 @@ done
 export DOCUMENT_ROOT="$DOCUMENT_ROOT"
 export INDEX_DOCUMENT="$INDEX_DOCUMENT"
 export NGINX_INCLUDES="$NGINX_INCLUDES"
+
+
 
 if [ -n "\$NEW_RELIC_LICENSE_KEY" ]; then
     echo "newrelic.license=\"\$NEW_RELIC_LICENSE_KEY\"" > /app/vendor/php/etc/conf.d/newrelic_license.ini

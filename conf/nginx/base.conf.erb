@@ -18,6 +18,8 @@ http {
     error_log logs/error.log notice;
     access_log logs/access.log;
 
+    types_hash_max_size 2048;
+
     client_max_body_size 100m;
     client_body_timeout 600s;
 
