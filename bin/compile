@@ -241,6 +241,8 @@ export_env_dir "$3"
 
 # Create dokku user so volumes can be read/write
 useradd -b /app/web -s /dev/null -u 1000 -U dokku
+chgrp dokku -R /app/vendor/nginx
+chgrp dokku -R /app/vendor/php
 
 # Download jq binary for JSON processing
 export PATH="$HOME/bin:$PATH"
