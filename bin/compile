@@ -397,6 +397,11 @@ if [ -n "$FRAMEWORK" ] && [ -f "$FRAMEWORK" ]; then
     LOG_FILES=$(unique_array ${LOG_FILES[@]} ${FRAMEWORK_LOG_FILES[@]})
 fi
 
+for d in ${LOG_FILES[@]}; do
+    chown dokku `dirname $d`
+    chmod 777 `dirname $d`
+done
+
 if [ -n "$COMPILE_CMD" ]; then
     status "Running compile commands"
     while read -r cmd; do
