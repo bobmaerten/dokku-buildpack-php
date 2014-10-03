@@ -245,8 +245,6 @@ export_env_dir "$3"
 # Download jq binary for JSON processing
 export PATH="$HOME/bin:$PATH"
 mkdir -p $HOME/bin
-mkdir /app/logs
-chmod 777 /app/logs
 curl "http://${S3_BUCKET}.s3.amazonaws.com/jq/jq" -L -s -o - > "$HOME/bin/jq"
 chmod +x "$HOME/bin/jq"
 
@@ -267,7 +265,7 @@ PHP_INCLUDES=
 COMPILE_CMD=
 NGINX_INCLUDES=
 NEWRELIC_VERSION=4.4.5.35
-LOG_FILES=( "/app/logs/nginx-error.log" "/app/logs/nginx-access.log" "/app/logs/php-error.log" )
+LOG_FILES=( "/app/vendor/nginx/logs/access.log" "/app/vendor/nginx/logs/error.log" "/app/vendor/php/var/log/php-error.log" )
 
 # Read config variables from composer.json if it exists
 if [ -f "$BUILD_DIR/composer.json" ]; then
@@ -450,8 +448,8 @@ fi
 erb conf/nginx.conf.erb > /app/vendor/nginx/conf/nginx.conf
 erb conf/site.conf.erb > /app/vendor/nginx/conf/site.conf
 
-# `init_log_plex_fifo ${LOG_FILES}`
-# `tail_log_plex ${LOG_FILES} ${SYS_LOG_FILES}`
+`init_log_plex_fifo ${LOG_FILES}`
+`tail_log_plex ${LOG_FILES} ${SYS_LOG_FILES}`
 
 (
     exec php-fpm -p "/app/vendor/php"
