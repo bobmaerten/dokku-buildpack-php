@@ -439,7 +439,10 @@ export DOCUMENT_ROOT="$DOCUMENT_ROOT"
 export INDEX_DOCUMENT="$INDEX_DOCUMENT"
 export NGINX_INCLUDES="$NGINX_INCLUDES"
 
-
+if [[ ! -d /app/logs ]]; then
+    mkdir /app/logs
+fi
+chmod 777 -R /app/logs
 
 if [ -n "\$NEW_RELIC_LICENSE_KEY" ]; then
     echo "newrelic.license=\"\$NEW_RELIC_LICENSE_KEY\"" > /app/vendor/php/etc/conf.d/newrelic_license.ini
@@ -448,8 +451,8 @@ fi
 erb conf/nginx.conf.erb > /app/vendor/nginx/conf/nginx.conf
 erb conf/site.conf.erb > /app/vendor/nginx/conf/site.conf
 
-`init_log_plex_fifo ${LOG_FILES}`
-`tail_log_plex ${LOG_FILES} ${SYS_LOG_FILES}`
+# `init_log_plex_fifo ${LOG_FILES}`
+# `tail_log_plex ${LOG_FILES} ${SYS_LOG_FILES}`
 
 (
     exec php-fpm -p "/app/vendor/php"
