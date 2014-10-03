@@ -70,10 +70,10 @@ http {
         #Specify a charset
         charset utf-8;
 
-        include site.conf;
-
         <% Shellwords.split(ENV['NGINX_INCLUDES'].to_s).each do |f| %>
         include /app/<%= f %>;
         <% end %>
+
+        include site.conf;
     }
 }
