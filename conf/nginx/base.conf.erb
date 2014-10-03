@@ -15,9 +15,10 @@ http {
 
     keepalive_timeout  65;
 
-    rewrite_log on;
-    error_log /app/vendor/nginx/logs/error.log debug;
+    error_log /app/vendor/nginx/logs/error.log notice;
     access_log /app/vendor/nginx/logs/access.log;
+
+    rewrite_log on;
 
     types_hash_max_size 2048;
 
