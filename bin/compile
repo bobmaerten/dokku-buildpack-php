@@ -444,6 +444,7 @@ if [[ ! -d /app/logs ]]; then
 fi
 chmod 777 -R /app/logs
 find /app/web/uploads -type d -exec chmod 777 {} \;
+find /app/web/tmp -type d -exec chmod 777 {} \;
 
 if [ -n "\$NEW_RELIC_LICENSE_KEY" ]; then
     echo "newrelic.license=\"\$NEW_RELIC_LICENSE_KEY\"" > /app/vendor/php/etc/conf.d/newrelic_license.ini
