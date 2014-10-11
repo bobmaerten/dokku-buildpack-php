@@ -15,8 +15,12 @@ http {
 
     keepalive_timeout  65;
 
-    error_log logs/error.log notice;
-    access_log logs/access.log;
+    error_log /app/logs/error.log notice;
+    access_log /app/logs/access.log;
+
+    rewrite_log on;
+
+    types_hash_max_size 2048;
 
     client_max_body_size 100m;
     client_body_timeout 600s;
@@ -68,10 +72,10 @@ http {
         #Specify a charset
         charset utf-8;
 
-        include site.conf;
-
         <% Shellwords.split(ENV['NGINX_INCLUDES'].to_s).each do |f| %>
         include /app/<%= f %>;
         <% end %>
+
+        include site.conf;
     }
 }
